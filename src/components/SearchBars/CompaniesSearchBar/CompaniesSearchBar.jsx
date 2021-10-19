@@ -1,25 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Autocomplete, Grid, Paper } from "@mui/material";
-import StyledTextField from "../styles";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import StyledTextField from "./styles";
+import { wishlistActionCreators } from "../../../state/action-creators";
 import AddButton from "../../Buttons/AddButton/AddButton";
-import SearchButton from "../../Buttons/SearchButton/SearchButton";
 import SortButton from "../../Buttons/SortButton/SortButton";
 
-const CompaniesSearchBar = ({
-  autocompleteData,
-  autocompleteInput,
-  setAutocompleteInput,
-}) => {
+const CompaniesSearchBar = () => {
+  // Redux
+  const dispatch = useDispatch();
+  const { setSearchParameter } = bindActionCreators(
+    wishlistActionCreators,
+    dispatch
+  );
+  const companiesState = useSelector(
+    (state) => state.wishlistReducer.companies
+  );
+
+  const [companyNames, setCompanyNames] = useState([]);
+  const [autocompleteInput, setAutocompleteInput] = useState("");
+
+  useEffect(() => {
+    setSearchParameter(autocompleteInput);
+  }, [autocompleteInput]); // eslint-disable-line
+
+  useEffect(() => {
+    const unsortedCompanyNames = [];
+    for (const company of companiesState) {
+      unsortedCompanyNames.push(company.name);
+    }
+    setCompanyNames(unsortedCompanyNames.sort((a, b) => a.localeCompare(b)));
+  }, [companiesState]);
+
   return (
     <Grid container alignItems="center" align="center" spacing={1}>
       <Grid item xs={12} sm={5} md={4} lg={3} xl={2}>
         <Autocomplete
           id="company-autocomplete"
-          loadingText="Loading..."
-          disablePortal
           fullWidth
           size="small"
-          options={autocompleteData}
+          loadingText="Loading..."
+          freeSolo={true}
+          options={companyNames}
           inputValue={autocompleteInput}
           onInputChange={(event, newInputValue) =>
             setAutocompleteInput(newInputValue)
@@ -27,7 +50,6 @@ const CompaniesSearchBar = ({
           PaperComponent={({ children }) => (
             <Paper
               style={{
-                //fontWeight: "bold",
                 color: "black",
                 textAlign: "start",
               }}
@@ -52,14 +74,16 @@ const CompaniesSearchBar = ({
           )}
         />
       </Grid>
+      {/*
       <Grid item>
         <SearchButton />
       </Grid>
+      */}
       <Grid item>
         <AddButton />
       </Grid>
       <Grid item style={{ marginLeft: "auto" }}>
-        <SortButton order={true} />
+        <SortButton />
       </Grid>
     </Grid>
   );

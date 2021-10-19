@@ -4,7 +4,7 @@ import {
   inputLabelClasses,
   outlinedInputClasses,
 } from "@mui/material";
-import globalStyles from "../../styles/globalStyles";
+import globalStyles from "../../../styles/globalStyles";
 
 const StyledTextField = styled(TextField)({
   [`& .${outlinedInputClasses.root} .${outlinedInputClasses.notchedOutline}`]: {
@@ -14,11 +14,11 @@ const StyledTextField = styled(TextField)({
   },
   [`&:hover .${outlinedInputClasses.root} .${outlinedInputClasses.notchedOutline}`]:
     {
-      borderColor: globalStyles.color.turquoise,
+      borderColor: globalStyles.color.purple,
     },
   [`& .${outlinedInputClasses.root}.${outlinedInputClasses.focused} .${outlinedInputClasses.notchedOutline}`]:
     {
-      borderColor: globalStyles.color.turquoise,
+      borderColor: globalStyles.color.purple,
     },
   [`& .${outlinedInputClasses.input}`]: {
     color: "black",
