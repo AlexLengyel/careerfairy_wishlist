@@ -22,26 +22,12 @@ const Wishlist = () => {
     (state) => state.wishlistReducer.descendingOrder
   );
 
+  // Add companies to the redux store by order of ids
   useEffect(() => {
     setCompanies(companies.sort((a, b) => a.id - b.id));
   }, []); // eslint-disable-line
 
-  /*
-  const [orderedFilteredCompanies, setOrderedFilteredCompanies] = useState([]);
-
-  useEffect(() => {
-    if (descendingOrderState) {
-      setOrderedFilteredCompanies(
-        companiesState.sort((a, b) => b.upvotes - a.upvotes)
-      );
-    } else {
-      setOrderedFilteredCompanies(
-        companiesState.sort((a, b) => a.upvotes - b.upvotes)
-      );
-    }
-  }, [companiesState, descendingOrderState]);
-*/
-
+  // It is filtering and ordering the companies based on the redux state conditions (searchParameterState, descendingOrderState)
   const handleOrderedFilteredCompanies = () => {
     let orderedFilteredCompanies = [];
 
@@ -54,7 +40,7 @@ const Wishlist = () => {
       orderedFilteredCompanies = [...companiesState];
     }
 
-    // Order by descending or ascending
+    // Order by descending or ascending value
     if (descendingOrderState) {
       orderedFilteredCompanies.sort((a, b) => b.upvotes - a.upvotes);
     } else {
@@ -64,6 +50,7 @@ const Wishlist = () => {
     return orderedFilteredCompanies;
   };
 
+  // Material UI hook for style classes
   const classes = useStyles();
 
   return (
@@ -98,16 +85,11 @@ const Wishlist = () => {
           spacing={3}
           sx={{ maxWidth: "90%" }}
         >
-          {
-            /*orderedFilteredCompanies*/ handleOrderedFilteredCompanies().map(
-              (company) => (
-                //console.log(company), // Wrong double render if orderedFilteredCompanies is in use
-                <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={company.id}>
-                  <WishlistCompanyCard company={company} />
-                </Grid>
-              )
-            )
-          }
+          {handleOrderedFilteredCompanies().map((company) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={company.id}>
+              <WishlistCompanyCard company={company} />
+            </Grid>
+          ))}
         </Grid>
       </Grid>
     </>

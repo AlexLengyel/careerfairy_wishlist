@@ -18,13 +18,16 @@ const UpvoteButton = ({ company }) => {
   // Notification
   const upvotedText = "Company is upvoted";
   const downvotedText = "Company is downvoted";
+  // State for the notification text
   const [notificationText, setNotificationText] = useState("");
+  // State for displaying the notification
   const [openState, setOpenState] = useState({
     open: false,
     vertical: "top",
     horizontal: "center",
   });
   const { vertical, horizontal, open } = openState;
+  // Closing the notification on click
   const handleCloseNotification = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -33,7 +36,7 @@ const UpvoteButton = ({ company }) => {
     setOpenState({ ...openState, open: false });
   };
 
-  // App
+  // Toggling the upvote value and triggering the notification
   const handleUpvoteCompany = () => {
     setNotificationText(!company.upvoted ? upvotedText : downvotedText);
     setOpenState({ ...openState, open: true });

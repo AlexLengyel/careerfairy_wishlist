@@ -5,7 +5,8 @@ import { bindActionCreators } from "redux";
 import StyledTextField from "./styles";
 import { wishlistActionCreators } from "../../../state/action-creators";
 import AddButton from "../../Buttons/AddButton/AddButton";
-import SortButton from "../../Buttons/SortButton/SortButton";
+import OrderButton from "../../Buttons/OrderButton/OrderButton";
+import globalStyles from "../../../styles/globalStyles";
 
 const CompaniesSearchBar = () => {
   // Redux
@@ -18,13 +19,17 @@ const CompaniesSearchBar = () => {
     (state) => state.wishlistReducer.companies
   );
 
+  // State for only the company names in alphabetical order to display them in the autocomplete list
   const [companyNames, setCompanyNames] = useState([]);
+  // State for the search bar input value
   const [autocompleteInput, setAutocompleteInput] = useState("");
 
+  // Adding the search input value to the redux store
   useEffect(() => {
     setSearchParameter(autocompleteInput);
   }, [autocompleteInput]); // eslint-disable-line
 
+  // Adding company names to the companyNames state in alphabetical order
   useEffect(() => {
     const unsortedCompanyNames = [];
     for (const company of companiesState) {
@@ -68,7 +73,10 @@ const CompaniesSearchBar = () => {
               label="Company's name"
               variant="outlined"
               InputLabelProps={{
-                style: { color: "#00d2aa", fontWeight: "bold" },
+                style: {
+                  color: globalStyles.color.turquoise,
+                  fontWeight: "bold",
+                },
               }}
             />
           )}
@@ -83,7 +91,7 @@ const CompaniesSearchBar = () => {
         <AddButton />
       </Grid>
       <Grid item style={{ marginLeft: "auto" }}>
-        <SortButton />
+        <OrderButton />
       </Grid>
     </Grid>
   );
