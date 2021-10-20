@@ -23,18 +23,22 @@ const AddButton = () => {
   );
 
   // State and onClick handler for notification
-  const [notificationSeverity, setNotificationSeverity] = useState("");
   const alreadyAddedText = "This company is already in the wish list";
   const justAddedText = "Company just added to the list";
   const textTooLong = "Company name is too long";
   const textTooShort = "Company name is too short";
+  // State for the notification text
   const [notificationText, setNotificationText] = useState("");
+  // State for the notification type (for example: "success" or "error")
+  const [notificationSeverity, setNotificationSeverity] = useState("");
+  // State for displaying the notification
   const [openState, setOpenState] = useState({
     open: false,
     vertical: "top",
     horizontal: "center",
   });
   const { vertical, horizontal, open } = openState;
+  // Close the notification on click
   const handleCloseNotification = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -43,7 +47,7 @@ const AddButton = () => {
     setOpenState({ ...openState, open: false });
   };
 
-  // Handle add company to companies array
+  // Adding company to the companies array if it passes the conditions and triggering the notification
   const handleAddCompany = () => {
     const checkIfOnlySpaces = (string) => {
       return string.replace(/\s/g, "").length;
@@ -53,8 +57,10 @@ const AddButton = () => {
       return string.replace(/\s\s+/g, " ").trim();
     };
 
+    // Check if the searchParameterState has only spaces (return: error)
     if (!checkIfOnlySpaces(searchParameterState)) return null;
 
+    // Check if the searchParameterState is longer than 45 or shorter than 3 characters (return: error)
     if (searchParameterState.length < 3) {
       // Notification
       setNotificationSeverity("error");
@@ -73,6 +79,7 @@ const AddButton = () => {
       });
     }
 
+    // Check if the searchParameterState is already exist in the companies array (return: error)
     for (const company of companiesState) {
       if (
         company.name.toLowerCase() ===
@@ -88,6 +95,7 @@ const AddButton = () => {
       }
     }
 
+    // Add company to the companies array
     addCompany({
       id: companiesState.length,
       name: removeExtraSpaces(searchParameterState),

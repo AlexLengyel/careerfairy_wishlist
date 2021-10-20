@@ -17,6 +17,7 @@ const SortButton = () => {
     (state) => state.wishlistReducer.descendingOrder
   );
 
+  // Changing the listing order
   const handleOrderChange = () => {
     setDescendingOrder(!descendingOrderState);
   };
