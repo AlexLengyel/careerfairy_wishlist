@@ -33,7 +33,7 @@ const UpvoteButton = ({ company }) => {
       return;
     }
 
-    setOpenState({ ...openState, open: false });
+    return setOpenState({ ...openState, open: false });
   };
 
   // Toggling the upvote value and triggering the notification

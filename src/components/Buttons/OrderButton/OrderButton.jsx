@@ -19,7 +19,7 @@ const SortButton = () => {
 
   // Changing the listing order
   const handleOrderChange = () => {
-    setDescendingOrder(!descendingOrderState);
+    return setDescendingOrder(!descendingOrderState);
   };
 
   return (

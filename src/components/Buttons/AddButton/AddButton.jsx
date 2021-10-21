@@ -44,24 +44,23 @@ const AddButton = () => {
       return;
     }
 
-    setOpenState({ ...openState, open: false });
+    return setOpenState({ ...openState, open: false });
   };
 
   // Adding company to the companies array if it passes the conditions and triggering the notification
   const handleAddCompany = () => {
+    // It give back the length of the string without any spaces in it
     const checkIfOnlySpaces = (string) => {
       return string.replace(/\s/g, "").length;
     };
 
+    // It removes the start, end and extra spaces
     const removeExtraSpaces = (string) => {
       return string.replace(/\s\s+/g, " ").trim();
     };
 
-    // Check if the searchParameterState has only spaces (return: error)
-    if (!checkIfOnlySpaces(searchParameterState)) return null;
-
-    // Check if the searchParameterState is longer than 45 or shorter than 3 characters (return: error)
-    if (searchParameterState.length < 3) {
+    // Check if the searchParameterState is longer than 45 or shorter than 3 characters without spaces (return: error)
+    if (checkIfOnlySpaces(searchParameterState) < 3) {
       // Notification
       setNotificationSeverity("error");
       setNotificationText(textTooShort);
