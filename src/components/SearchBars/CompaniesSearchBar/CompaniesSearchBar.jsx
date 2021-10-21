@@ -35,7 +35,9 @@ const CompaniesSearchBar = () => {
     for (const company of companiesState) {
       unsortedCompanyNames.push(company.name);
     }
-    setCompanyNames(unsortedCompanyNames.sort((a, b) => a.localeCompare(b)));
+    return setCompanyNames(
+      unsortedCompanyNames.sort((a, b) => a.localeCompare(b))
+    );
   }, [companiesState]);
 
   return (
